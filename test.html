@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formulario Final</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap @5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #1e1e2f;
+      --bg-card: #2a2a40;
+      --text: #ffffff;
+      --accent: #6cb6ff;
+      --primary: #7048e8;
+      --primary-light: #9b6fff;
+      --error: #ff4c4c;
+      --success: #4caf50;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .form-container {
+      background-color: var(--bg-card);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .form-title {
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .form-control {
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      background-color: rgba(0, 0, 0, 0.3);
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 0.25rem rgba(108, 92, 231, 0.25);
+      color: var(--text);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      padding: 10px 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background-color: var(--primary-light);
+      border-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+    }
+
+    .invalid-feedback {
+      display: none;
+    }
+
+    .tooltip-inner {
+      background-color: var(--error);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+    }
+
+    .tooltip.bs-tooltip-top .arrow::before {
+      border-top-color: var(--error);
+    }
+
+    .form-text {
+      color: var(--text-secondary);
+      opacity: 0.7;
+      font-size: 0.85rem;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    .shake {
+      animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    .error-summary {
+      background-color: rgba(255, 118, 117, 0.2);
+      border-left: 4px solid var(--error);
+      padding: 1rem;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .success-message {
+      background-color: rgba(85, 239, 196, 0.2);
+      border-left: 4px solid var(--success);
+      padding: 1rem;
+      border-radius: 5px;
+      margin-top: 1rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container form-container">
+  <h2 class="form-title">Registro de Usuario</h2>
+  <div class="error-summary" id="errorSummary">
+    <p class="mb-0">Por favor, corrige los errores en el formulario:</p>
+    <ul id="errorList" class="mb-0 mt-2"></ul>
+  </div>
+  <form id="registrationForm" novalidate>
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label for="nombre" class="form-label" data-bs-toggle="tooltip" title="">Nombre</label>
+        <input type="text" class="form-control" id="nombre" required>
+      </div>
+      <div class="col-md-6">
+        <label for="apellido" class="form-label" data-bs-toggle="tooltip" title="">Apellido</label>
+        <input type="text" class="form-control" id="apellido" required>
+      </div>
+      <div class="col-md-6">
+        <label for="rut" class="form-label" data-bs-toggle="tooltip" title="">RUT</label>
+        <input type="text" class="form-control" id="rut" required>
+        <div class="form-text">Formato: 12.345.678-9</div>
+      </div>
+      <div class="col-md-6">
+        <label for="fechaNacimiento" class="form-label" data-bs-toggle="tooltip" title="">Fecha de Nacimiento</label>
+        <input type="text" class="form-control" id="fechaNacimiento" maxlength="10" required>
+        <div class="form-text">Formato: DD/MM/AAAA</div>
+      </div>
+      <div class="col-md-6">
+        <label for="altura" class="form-label" data-bs-toggle="tooltip" title="">Altura (m)</label>
+        <input type="text" class="form-control" id="altura" maxlength="5" required>
+        <div class="form-text">Formato: 1,75</div>
+      </div>
+      <div class="col-md-6">
+        <label for="direccion" class="form-label" data-bs-toggle="tooltip" title="">Dirección</label>
+        <input type="text" class="form-control" id="direccion" required>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Enviar Información</button>
+    <div class="success-message" id="successMessage">
+      <h5 class="text-success mb-2">¡Formulario enviado correctamente!</h5>
+      <p class="mb-0">Tus datos han sido registrados.</p>
+    </div>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap @5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('registrationForm');
+    const errorSummary = document.getElementById('errorSummary');
+    const errorList = document.getElementById('errorList');
+    const successMessage = document.getElementById('successMessage');
+
+    // Función para validar RUT chileno
+    function validarRut(rut) {
+        rut = rut.replace(/[.-]/g, '');
+        if (!/^[0-9]{7,8}[0-9kK]$/i.test(rut)) return false;
+
+        let cuerpo = rut.slice(0, -1);
+        let dv = rut.slice(-1).toUpperCase();
+        let suma = 0;
+        let multiplo = 2;
+
+        for (let i = cuerpo.length - 1; i >= 0; i--) {
+            suma += parseInt(cuerpo[i]) * multiplo;
+            multiplo = multiplo === 7 ? 2 : multiplo + 1;
+        }
+
+        let dvCalculado = 11 - (suma % 11);
+        dvCalculado = dvCalculado === 11 ? '0' : dvCalculado === 10 ? 'K' : String(dvCalculado);
+
+        return dv === dvCalculado;
+    }
+
+    // Formateo RUT
+    document.getElementById('rut').addEventListener('input', function(e) {
+        let rut = e.target.value.replace(/[.-]/g, '').replace(/[^0-9kK]/gi, '');
+
+        if (rut.length < 8 && rut.length > 0) {
+            e.target.setCustomValidity("El RUT debe tener al menos 8 dígitos.");
+        } else {
+            e.target.setCustomValidity("");
+        }
+
+        if (rut.length > 1) {
+            let cuerpo = rut.slice(0, -1);
+            let dv = rut.slice(-1);
+            let formatted = '';
+            while (cuerpo.length > 3) {
+                formatted = '.' + cuerpo.slice(-3) + formatted;
+                cuerpo = cuerpo.slice(0, -3);
+            }
+            formatted = cuerpo + formatted;
+            e.target.value = formatted + '-' + dv;
+        } else {
+            e.target.value = rut;
+        }
+    });
+
+    // Formateo Fecha de Nacimiento
+    document.getElementById('fechaNacimiento').addEventListener('input', function(e) {
+      let fecha = e.target.value.replace(/\D/g, '');
+      if (fecha.length <= 2) {
+        e.target.value = fecha;
+      } else if (fecha.length <= 4) {
+        e.target.value = fecha.slice(0, 2) + '/' + fecha.slice(2);
+      } else {
+        e.target.value = fecha.slice(0, 2) + '/' + fecha.slice(2, 4) + '/' + fecha.slice(4, 8);
+      }
+    });
+
+    // Validar Fecha
+    function validarFecha(fecha) {
+      const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+      const match = fecha.match(regex);
+      if (!match) return false;
+
+      const dia = parseInt(match[1], 10);
+      const mes = parseInt(match[2], 10);
+      const anio = parseInt(match[3], 10);
+
+      if (mes < 1 || mes > 12) return false;
+      if (dia < 1 || dia > 31) return false;
+      if (anio < 1900 || anio > new Date().getFullYear()) return false;
+
+      const diasEnMes = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      if (mes === 2 && ((anio % 4 === 0 && anio % 100 !== 0) || anio % 400 === 0)) {
+          if (dia > 29) return false;
+      } else if (dia > diasEnMes[mes]) {
+          return false;
+      }
+
+      return true;
+    }
+
+    // Formateo Altura
+    document.getElementById('altura').addEventListener('blur', function(e) {
+      let altura = e.target.value.replace(',', '.').replace(/\./g, ',');
+      altura = altura.replace(/[^0-9,]/g, '');
+
+      if (/^[0-9]+$/.test(altura)) {
+          if (altura.length <= 3) {
+              altura = altura.padStart(3, '0');
+              altura = altura.substring(0, 1) + ',' + altura.substring(1);
+          }
+      } else if (/[0-9]+,[0-9]+$/.test(altura)) {
+          const partes = altura.split(',');
+          if (partes[1].length > 2) {
+              altura = partes[0] + ',' + partes[1].substring(0, 2);
+          }
+      }
+
+      e.target.value = altura;
+    });
+
+    // Validar Altura
+    function validarAltura(altura) {
+      const regex = /^[0-9]+,[0-9]{2}$/;
+      if (!regex.test(altura)) return false;
+
+      const alturaNum = parseFloat(altura.replace(',', '.'));
+      return alturaNum >= 0.50 && alturaNum <= 2.50;
+    }
+
+    // Validar Dirección
+    function validarDireccion(direccion) {
+      return direccion.trim().length >= 5 && /\d/.test(direccion);
+    }
+
+    // Validación del formulario
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      let isValid = true;
+      const errors = [];
+
+      errorList.innerHTML = '';
+      errorSummary.style.display = 'none';
+
+      const nombre = document.getElementById('nombre');
+      if (nombre.value.trim() === '') {
+          errors.push("Nombre obligatorio.");
+          isValid = false;
+      }
+
+      const rut = document.getElementById('rut').value.replace(/[.-]/g, '');
+      if (rut.length < 8 || !validarRut(rut)) {
+          errors.push("RUT inválido o incompleto.");
+          isValid = false;
+      }
+
+      const fechaNacimiento = document.getElementById('fechaNacimiento').value;
+      if (!validarFecha(fechaNacimiento)) {
+          errors.push("Fecha inválida. Días entre 1-31, meses entre 1-12 y año entre 1900 y " + new Date().getFullYear());
+          isValid = false;
+      }
+
+      const altura = document.getElementById('altura').value;
+      const regexAltura = /^[0-9]+,[0-9]{2}$/;
+      if (!regexAltura.test(altura)) {
+          errors.push("Altura debe tener formato válido (ej: 1,75).");
+          isValid = false;
+      }
+
+      const direccion = document.getElementById('direccion');
+      if (!direccion.value.trim() || !/\d/.test(direccion.value)) {
+          errors.push("Dirección inválida.");
+          isValid = false;
+      }
+
+      if (!isValid) {
+          errors.forEach(error => {
+              const li = document.createElement('li');
+              li.textContent = error;
+              errorList.appendChild(li);
+          });
+          errorSummary.style.display = 'block';
+          alert("Por favor, corrige los errores antes de continuar.");
+      } else {
+          alert("Información enviada correctamente.");
+          form.reset();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
